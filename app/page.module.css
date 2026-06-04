@@ -1,0 +1,542 @@
+/* ========================
+   NAV
+======================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(212, 160, 23, 0.15);
+}
+
+.navInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.navLogo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navLinks a {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--light);
+  transition: color 0.2s;
+}
+
+.navLinks a:hover {
+  color: var(--gold);
+}
+
+.navCta {
+  background: var(--gold);
+  color: var(--black) !important;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  transition: background 0.2s !important;
+}
+
+.navCta:hover {
+  background: var(--gold-light) !important;
+}
+
+/* ========================
+   HERO
+======================== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--black);
+}
+
+.heroPattern {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(212, 160, 23, 0.03) 40px,
+      rgba(212, 160, 23, 0.03) 41px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 40px,
+      rgba(212, 160, 23, 0.03) 40px,
+      rgba(212, 160, 23, 0.03) 41px
+    );
+}
+
+.heroPattern::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to top, var(--black), transparent);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  padding: 7rem 1.5rem 4rem;
+  animation: fadeUp 0.8s ease both;
+}
+
+.heroSub {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.heroTitle {
+  font-size: clamp(4rem, 12vw, 9rem);
+  font-weight: 700;
+  line-height: 0.95;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.heroGold {
+  color: var(--gold);
+  -webkit-text-stroke: 1px var(--gold);
+}
+
+.heroDesc {
+  font-size: 1.15rem;
+  color: var(--light);
+  font-style: italic;
+  margin-bottom: 2.5rem;
+  max-width: 480px;
+}
+
+.heroCtas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.heroRating {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.stars {
+  color: var(--gold);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+}
+
+.ratingText {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-family: var(--font-heading);
+  letter-spacing: 0.05em;
+}
+
+.heroScroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.heroScroll span {
+  display: block;
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: fadeIn 1s 1s ease both;
+}
+
+/* ========================
+   BUTTONS
+======================== */
+.btnPrimary {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--black);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.9rem 2rem;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btnPrimary:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+}
+
+.btnGhost {
+  display: inline-block;
+  border: 1px solid rgba(212, 160, 23, 0.4);
+  color: var(--white);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.9rem 2rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btnGhost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* ========================
+   SECTIONS
+======================== */
+.section {
+  padding: 6rem 0;
+}
+
+.sectionHeader {
+  margin-bottom: 3rem;
+}
+
+.sectionTag {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.sectionTitle {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--white);
+  line-height: 1;
+}
+
+.divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(212, 160, 23, 0.3), transparent);
+  margin: 0 1.5rem;
+}
+
+/* ========================
+   SERVICES
+======================== */
+.servicesGrid {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--dark3);
+}
+
+.serviceCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--dark3);
+  transition: background 0.2s;
+}
+
+.serviceCard:hover {
+  background: var(--dark2);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: 0 -1rem;
+}
+
+.serviceInfo h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--white);
+}
+
+.serviceDuration {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-family: var(--font-heading);
+  letter-spacing: 0.1em;
+}
+
+.servicePrice {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.servicesCta {
+  margin-top: 2.5rem;
+}
+
+/* ========================
+   ABOUT
+======================== */
+.aboutLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+.aboutText p {
+  color: var(--light);
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.aboutText .sectionTitle {
+  margin-bottom: 1.5rem;
+}
+
+.aboutStats {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--dark3);
+}
+
+.stat {}
+
+.statNum {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.statLabel {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin-top: 0.25rem;
+}
+
+.aboutQuotes {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.quote {
+  background: var(--dark2);
+  border-left: 2px solid var(--gold);
+  padding: 1.5rem;
+}
+
+.quote p {
+  color: var(--light);
+  font-style: italic;
+  margin-bottom: 0.75rem;
+  line-height: 1.7;
+}
+
+.quote cite {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  font-style: normal;
+  text-transform: uppercase;
+}
+
+/* ========================
+   CONTACT / HOURS
+======================== */
+.contactSection {
+  position: relative;
+  background: var(--dark2);
+  padding: 6rem 0;
+  overflow: hidden;
+}
+
+.contactPattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  background-image: radial-gradient(circle at 80% 50%, rgba(212, 160, 23, 0.08) 0%, transparent 60%);
+}
+
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.contactBlock .sectionTitle {
+  margin-bottom: 2rem;
+}
+
+.hoursTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.hoursTable td {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--dark3);
+  font-size: 0.95rem;
+}
+
+.hoursTable td:first-child {
+  color: var(--light);
+}
+
+.hoursTable td:last-child {
+  text-align: right;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--white);
+}
+
+.closed {
+  color: var(--muted) !important;
+}
+
+.walkIn {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.contactDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contactRow {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.contactIcon {
+  font-size: 1.1rem;
+  margin-top: 2px;
+}
+
+.contactRow p,
+.contactRow a {
+  color: var(--light);
+  line-height: 1.6;
+  transition: color 0.2s;
+}
+
+.contactRow a:hover {
+  color: var(--gold);
+}
+
+.mapLink {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold) !important;
+}
+
+/* ========================
+   FOOTER
+======================== */
+.footer {
+  background: var(--black);
+  border-top: 1px solid var(--dark3);
+  padding: 2rem 0;
+}
+
+.footerInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footerLogo {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-size: 0.9rem;
+}
+
+.footerCopy {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-family: var(--font-heading);
+  letter-spacing: 0.05em;
+}
+
+/* ========================
+   RESPONSIVE
+======================== */
+@media (max-width: 768px) {
+  .navLinks a:not(.navCta) {
+    display: none;
+  }
+
+  .heroTitle {
+    font-size: clamp(3.5rem, 18vw, 6rem);
+  }
+
+  .aboutLayout,
+  .contactGrid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .footerInner {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .aboutStats {
+    gap: 1.5rem;
+  }
+}
