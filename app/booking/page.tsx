@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { format, addDays, isSunday, isToday, isPast, startOfDay } from 'date-fns'
+import { format, addDays, isSunday, isToday, startOfDay } from 'date-fns'
 import { nl } from 'date-fns/locale'
 import { SERVICES, TIME_SLOTS } from '@/lib/constants'
 import styles from './booking.module.css'
@@ -18,20 +18,20 @@ interface FormData {
   notes: string
 }
 
+interface FieldErrors {
+  name?: string
+  phone?: string
+  email?: string
+}
+
 const EMPTY_FORM: FormData = {
-  service: '',
-  date: '',
-  time_slot: '',
-  name: '',
-  phone: '',
-  email: '',
-  notes: '',
+  service: '', date: '', time_slot: '',
+  name: '', phone: '', email: '', notes: '',
 }
 
 function generateDays(count = 30) {
   const days = []
   let d = new Date()
-  // Start tomorrow if past 18:00 today
   if (new Date().getHours() >= 18) d = addDays(d, 1)
   for (let i = 0; i < count + 14; i++) {
     const day = addDays(startOfDay(d), i)
@@ -41,9 +41,31 @@ function generateDays(count = 30) {
   return days
 }
 
+// Validation helpers
+function validateName(v: string) {
+  if (!v.trim()) return 'Naam is verplicht'
+  if (v.trim().length < 2) return 'Naam moet minimaal 2 tekens zijn'
+  if (!/^[a-zA-ZÀ-ÿ\s\-']+$/.test(v.trim())) return 'Naam mag alleen letters bevatten'
+  return ''
+}
+
+function validatePhone(v: string) {
+  const digits = v.replace(/[\s\-()]/g, '')
+  if (!digits) return 'Telefoonnummer is verplicht'
+  if (!/^(\+31|0)[0-9]{9}$/.test(digits)) return 'Voer een geldig Nederlands nummer in (bijv. 06 12345678)'
+  return ''
+}
+
+function validateEmail(v: string) {
+  if (!v) return ''
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'Voer een geldig e-mailadres in'
+  return ''
+}
+
 export default function BookingPage() {
   const [step, setStep] = useState<Step>(1)
   const [form, setForm] = useState<FormData>(EMPTY_FORM)
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
   const [bookedSlots, setBookedSlots] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const [submitting, setSubmitting] = useState(false)
@@ -65,7 +87,21 @@ export default function BookingPage() {
 
   const selectedService = SERVICES.find(s => s.id === form.service)
 
+  const handleFieldBlur = (field: keyof FieldErrors, value: string) => {
+    let err = ''
+    if (field === 'name') err = validateName(value)
+    if (field === 'phone') err = validatePhone(value)
+    if (field === 'email') err = validateEmail(value)
+    setFieldErrors(prev => ({ ...prev, [field]: err }))
+  }
+
   const handleSubmit = async () => {
+    const nameErr = validateName(form.name)
+    const phoneErr = validatePhone(form.phone)
+    const emailErr = validateEmail(form.email)
+    setFieldErrors({ name: nameErr, phone: phoneErr, email: emailErr })
+    if (nameErr || phoneErr || emailErr) return
+
     setError('')
     setSubmitting(true)
     try {
@@ -82,6 +118,12 @@ export default function BookingPage() {
     } finally {
       setSubmitting(false)
     }
+  }
+
+  // Format phone input: only allow digits, spaces, +, -, ()
+  const handlePhoneInput = (v: string) => {
+    const clean = v.replace(/[^0-9\s\+\-()]/g, '')
+    setForm(f => ({ ...f, phone: clean }))
   }
 
   if (success) {
@@ -107,39 +149,31 @@ export default function BookingPage() {
 
   return (
     <div className={styles.page}>
-      {/* Header */}
       <div className={styles.header}>
         <Link href="/" className={styles.backLink}>← Terug</Link>
         <h1 className={styles.title}>Afspraak boeken</h1>
         <p className={styles.subtitle}>Barbershop Tek · Tilburg</p>
       </div>
 
-      {/* Steps indicator */}
       <div className={styles.stepsBar}>
-        {(['1', '2', '3', '4'] as const).map((s, i) => (
-          <div key={s} className={`${styles.stepItem} ${step > i + 1 ? styles.done : ''} ${step === i + 1 ? styles.active : ''}`}>
-            <span className={styles.stepNum}>{step > i + 1 ? '✓' : s}</span>
-            <span className={styles.stepLabel}>{['Dienst', 'Datum', 'Tijd', 'Gegevens'][i]}</span>
+        {(['1','2','3','4'] as const).map((s, i) => (
+          <div key={s} className={`${styles.stepItem} ${step > i+1 ? styles.done : ''} ${step === i+1 ? styles.active : ''}`}>
+            <span className={styles.stepNum}>{step > i+1 ? '✓' : s}</span>
+            <span className={styles.stepLabel}>{['Dienst','Datum','Tijd','Gegevens'][i]}</span>
           </div>
         ))}
       </div>
 
       <div className={styles.content}>
 
-        {/* STEP 1: Service */}
         {step === 1 && (
           <div className={styles.stepPanel}>
             <h2 className={styles.stepTitle}>Kies een dienst</h2>
             <div className={styles.serviceList}>
               {SERVICES.map(s => (
-                <button
-                  key={s.id}
+                <button key={s.id}
                   className={`${styles.serviceBtn} ${form.service === s.id ? styles.selected : ''}`}
-                  onClick={() => {
-                    setForm(f => ({ ...f, service: s.id }))
-                    setTimeout(() => setStep(2), 200)
-                  }}
-                >
+                  onClick={() => { setForm(f => ({ ...f, service: s.id })); setTimeout(() => setStep(2), 200) }}>
                   <div className={styles.serviceBtnInfo}>
                     <span className={styles.serviceBtnName}>{s.name}</span>
                     <span className={styles.serviceBtnDur}>{s.duration}</span>
@@ -151,32 +185,19 @@ export default function BookingPage() {
           </div>
         )}
 
-        {/* STEP 2: Date */}
         {step === 2 && (
           <div className={styles.stepPanel}>
             <h2 className={styles.stepTitle}>Kies een datum</h2>
             <div className={styles.dateGrid}>
               {days.map(day => {
                 const str = format(day, 'yyyy-MM-dd')
-                const isSelected = form.date === str
                 return (
-                  <button
-                    key={str}
-                    className={`${styles.dateBtn} ${isSelected ? styles.selected : ''}`}
-                    onClick={() => {
-                      setForm(f => ({ ...f, date: str, time_slot: '' }))
-                      setTimeout(() => setStep(3), 200)
-                    }}
-                  >
-                    <span className={styles.dateBtnDay}>
-                      {format(day, 'EEE', { locale: nl })}
-                    </span>
-                    <span className={styles.dateBtnNum}>
-                      {format(day, 'd', { locale: nl })}
-                    </span>
-                    <span className={styles.dateBtnMonth}>
-                      {format(day, 'MMM', { locale: nl })}
-                    </span>
+                  <button key={str}
+                    className={`${styles.dateBtn} ${form.date === str ? styles.selected : ''}`}
+                    onClick={() => { setForm(f => ({ ...f, date: str, time_slot: '' })); setTimeout(() => setStep(3), 200) }}>
+                    <span className={styles.dateBtnDay}>{format(day, 'EEE', { locale: nl })}</span>
+                    <span className={styles.dateBtnNum}>{format(day, 'd', { locale: nl })}</span>
+                    <span className={styles.dateBtnMonth}>{format(day, 'MMM', { locale: nl })}</span>
                     {isToday(day) && <span className={styles.todayBadge}>Vandaag</span>}
                   </button>
                 )
@@ -186,35 +207,20 @@ export default function BookingPage() {
           </div>
         )}
 
-        {/* STEP 3: Time */}
         {step === 3 && (
           <div className={styles.stepPanel}>
             <h2 className={styles.stepTitle}>
               Kies een tijdstip
-              {form.date && (
-                <span className={styles.stepSubtitle}>
-                  {format(new Date(form.date + 'T00:00:00'), 'EEEE d MMMM', { locale: nl })}
-                </span>
-              )}
+              {form.date && <span className={styles.stepSubtitle}>{format(new Date(form.date + 'T00:00:00'), 'EEEE d MMMM', { locale: nl })}</span>}
             </h2>
-            {loading ? (
-              <p className={styles.loadingText}>Tijdslots laden…</p>
-            ) : (
+            {loading ? <p className={styles.loadingText}>Tijdslots laden…</p> : (
               <div className={styles.timeGrid}>
                 {TIME_SLOTS.map(slot => {
                   const taken = bookedSlots.includes(slot)
                   return (
-                    <button
-                      key={slot}
-                      disabled={taken}
+                    <button key={slot} disabled={taken}
                       className={`${styles.timeBtn} ${taken ? styles.taken : ''} ${form.time_slot === slot ? styles.selected : ''}`}
-                      onClick={() => {
-                        if (!taken) {
-                          setForm(f => ({ ...f, time_slot: slot }))
-                          setTimeout(() => setStep(4), 200)
-                        }
-                      }}
-                    >
+                      onClick={() => { if (!taken) { setForm(f => ({ ...f, time_slot: slot })); setTimeout(() => setStep(4), 200) } }}>
                       {slot}
                       {taken && <span className={styles.takenLabel}>Bezet</span>}
                     </button>
@@ -226,74 +232,51 @@ export default function BookingPage() {
           </div>
         )}
 
-        {/* STEP 4: Personal details */}
         {step === 4 && (
           <div className={styles.stepPanel}>
             <h2 className={styles.stepTitle}>Jouw gegevens</h2>
-
             <div className={styles.summaryBox}>
-              <div className={styles.summaryRow}>
-                <span>Dienst</span>
-                <strong>{selectedService?.name}</strong>
-              </div>
-              <div className={styles.summaryRow}>
-                <span>Datum</span>
-                <strong>
-                  {form.date && format(new Date(form.date + 'T00:00:00'), 'EEEE d MMMM', { locale: nl })}
-                </strong>
-              </div>
-              <div className={styles.summaryRow}>
-                <span>Tijdstip</span>
-                <strong>{form.time_slot}</strong>
-              </div>
-              <div className={styles.summaryRow}>
-                <span>Prijs</span>
-                <strong>{selectedService?.price}</strong>
-              </div>
+              <div className={styles.summaryRow}><span>Dienst</span><strong>{selectedService?.name}</strong></div>
+              <div className={styles.summaryRow}><span>Datum</span><strong>{form.date && format(new Date(form.date + 'T00:00:00'), 'EEEE d MMMM', { locale: nl })}</strong></div>
+              <div className={styles.summaryRow}><span>Tijdstip</span><strong>{form.time_slot}</strong></div>
+              <div className={styles.summaryRow}><span>Prijs</span><strong>{selectedService?.price}</strong></div>
             </div>
 
             <div className={styles.formFields}>
               <div className={styles.formRow}>
                 <label>Naam *</label>
-                <input
-                  type="text"
-                  placeholder="Jouw volledige naam"
+                <input type="text" placeholder="Voor- en achternaam"
                   value={form.name}
                   onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                  className={styles.input}
-                  required
-                />
+                  onBlur={e => handleFieldBlur('name', e.target.value)}
+                  className={`${styles.input} ${fieldErrors.name ? styles.inputError : ''}`} />
+                {fieldErrors.name && <span className={styles.fieldError}>{fieldErrors.name}</span>}
               </div>
               <div className={styles.formRow}>
                 <label>Telefoonnummer *</label>
-                <input
-                  type="tel"
-                  placeholder="06 12345678"
+                <input type="tel" placeholder="06 12345678"
                   value={form.phone}
-                  onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-                  className={styles.input}
-                  required
-                />
+                  onChange={e => handlePhoneInput(e.target.value)}
+                  onBlur={e => handleFieldBlur('phone', e.target.value)}
+                  className={`${styles.input} ${fieldErrors.phone ? styles.inputError : ''}`}
+                  maxLength={15} />
+                {fieldErrors.phone && <span className={styles.fieldError}>{fieldErrors.phone}</span>}
               </div>
               <div className={styles.formRow}>
                 <label>E-mail <span className={styles.optional}>(optioneel)</span></label>
-                <input
-                  type="email"
-                  placeholder="jouw@email.nl"
+                <input type="email" placeholder="jouw@email.nl"
                   value={form.email}
                   onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                  className={styles.input}
-                />
+                  onBlur={e => handleFieldBlur('email', e.target.value)}
+                  className={`${styles.input} ${fieldErrors.email ? styles.inputError : ''}`} />
+                {fieldErrors.email && <span className={styles.fieldError}>{fieldErrors.email}</span>}
               </div>
               <div className={styles.formRow}>
                 <label>Opmerking <span className={styles.optional}>(optioneel)</span></label>
-                <textarea
-                  placeholder="Bijv. gewenste stijl of speciale wensen…"
+                <textarea placeholder="Bijv. gewenste stijl of speciale wensen…"
                   value={form.notes}
                   onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
-                  className={styles.textarea}
-                  rows={3}
-                />
+                  className={styles.textarea} rows={3} />
               </div>
             </div>
 
@@ -301,11 +284,8 @@ export default function BookingPage() {
 
             <div className={styles.formActions}>
               <button className={styles.btnBack} onClick={() => setStep(3)}>← Terug</button>
-              <button
-                className={styles.btnPrimary}
-                onClick={handleSubmit}
-                disabled={submitting || !form.name || !form.phone}
-              >
+              <button className={styles.btnPrimary} onClick={handleSubmit}
+                disabled={submitting || !form.name || !form.phone}>
                 {submitting ? 'Bezig…' : 'Bevestig afspraak'}
               </button>
             </div>

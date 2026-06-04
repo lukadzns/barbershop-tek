@@ -1,0 +1,520 @@
+/* LOGIN */
+.loginPage {
+  min-height: 100vh;
+  background: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.loginBox {
+  background: var(--dark2);
+  border: 1px solid var(--dark3);
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  animation: fadeUp 0.4s ease both;
+}
+
+.loginLogo {
+  margin-bottom: 1rem;
+}
+
+.loginTitle {
+  font-size: 2rem;
+  color: var(--white);
+  margin-bottom: 0.2rem;
+}
+
+.loginSub {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-family: var(--font-heading);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.loginInput {
+  background: var(--dark);
+  border: 1px solid var(--dark3);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  outline: none;
+  text-align: center;
+  letter-spacing: 0.2em;
+  transition: border-color 0.2s;
+}
+
+.loginInput:focus { border-color: var(--gold); }
+.loginInputError { border-color: #e05555 !important; }
+
+.loginError {
+  font-size: 0.8rem;
+  color: #ff7070;
+  font-family: var(--font-heading);
+  letter-spacing: 0.08em;
+}
+
+.loginBtn {
+  background: var(--gold);
+  color: var(--black);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.85rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.loginBtn:hover { background: var(--gold-light); }
+
+.loginBack {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+.loginBack:hover { color: var(--gold); }
+
+/* ADMIN PAGE */
+.page {
+  min-height: 100vh;
+  background: var(--black);
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: var(--dark2);
+  border-bottom: 1px solid var(--dark3);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.headerTitle {
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 0;
+}
+
+.headerSub {
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-family: var(--font-heading);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.headerSiteLink {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  transition: opacity 0.2s;
+}
+.headerSiteLink:hover { opacity: 0.7; }
+
+.logoutBtn {
+  background: transparent;
+  border: 1px solid var(--dark3);
+  color: var(--muted);
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.logoutBtn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* Week nav */
+.weekNav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: var(--dark);
+  border-bottom: 1px solid var(--dark3);
+}
+
+.weekNavBtn {
+  background: transparent;
+  border: 1px solid var(--dark3);
+  color: var(--light);
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.weekNavBtn:hover { border-color: var(--gold); color: var(--gold); }
+
+.weekLabel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.weekLabelMain {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  text-transform: uppercase;
+}
+
+.todayBtn {
+  background: rgba(212, 160, 23, 0.15);
+  border: 1px solid rgba(212, 160, 23, 0.3);
+  color: var(--gold);
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.todayBtn:hover { background: rgba(212, 160, 23, 0.25); }
+
+/* Stats */
+.statsBar {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--dark3);
+}
+
+.stat {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border-right: 1px solid var(--dark3);
+}
+.stat:last-child { border-right: none; }
+
+.statNum {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.statLabel {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 0.2rem;
+}
+
+/* Calendar */
+.loadingWrap {
+  padding: 3rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  border-right: 1px solid var(--dark3);
+  overflow-x: auto;
+  min-height: calc(100vh - 220px);
+}
+
+.dayCol {
+  border-left: 1px solid var(--dark3);
+  border-bottom: 1px solid var(--dark3);
+}
+
+.today {
+  background: rgba(212, 160, 23, 0.03);
+}
+
+.dayHeader {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--dark3);
+  background: var(--dark2);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.dayName {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.dayNum {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1;
+}
+
+.dayNumToday {
+  color: var(--gold);
+}
+
+.dayCount {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.daySlots {
+  display: flex;
+  flex-direction: column;
+}
+
+.slot {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  min-height: 42px;
+  transition: background 0.15s;
+}
+
+.slotBooked {
+  background: rgba(212, 160, 23, 0.08);
+  cursor: pointer;
+  border-left: 2px solid var(--gold);
+}
+
+.slotBooked:hover {
+  background: rgba(212, 160, 23, 0.15);
+}
+
+.slotFree {
+  cursor: default;
+}
+
+.slotTime {
+  font-family: var(--font-heading);
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  flex-shrink: 0;
+  width: 36px;
+}
+
+.slotBooking {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+}
+
+.slotName {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slotService {
+  font-size: 0.65rem;
+  color: var(--gold);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slotFreeLabel {
+  font-size: 0.6rem;
+  color: rgba(255,255,255,0.1);
+  font-family: var(--font-heading);
+  letter-spacing: 0.1em;
+}
+
+/* Modal */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal {
+  background: var(--dark2);
+  border: 1px solid rgba(212,160,23,0.3);
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  animation: fadeUp 0.25s ease;
+}
+
+.modalClose {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.modalClose:hover { color: var(--white); }
+
+.modalTitle {
+  font-size: 1.3rem;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+
+.modalRows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 1.5rem;
+}
+
+.modalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--dark3);
+  gap: 1rem;
+}
+
+.modalRow span {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.modalRow strong {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  color: var(--white);
+  text-align: right;
+}
+
+.modalPhone {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold);
+  text-align: right;
+}
+
+.modalActions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btnCall {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gold);
+  color: var(--black);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.75rem 1rem;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.btnCall:hover { background: var(--gold-light); }
+
+.btnCancel {
+  flex: 1;
+  background: transparent;
+  border: 1px solid rgba(220, 80, 80, 0.4);
+  color: #ff7070;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+.btnCancel:hover:not(:disabled) {
+  border-color: #e05555;
+  background: rgba(220, 80, 80, 0.1);
+}
+.btnCancel:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .calendar { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .calendar { grid-template-columns: repeat(2, 1fr); }
+  .weekNavBtn { font-size: 0.65rem; padding: 0.4rem 0.6rem; }
+  .statsBar { flex-wrap: wrap; }
+  .stat { min-width: 33%; }
+}

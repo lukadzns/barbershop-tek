@@ -400,6 +400,18 @@
   color: var(--muted);
 }
 
+.inputError {
+  border-color: #e05555 !important;
+}
+
+.fieldError {
+  font-size: 0.78rem;
+  color: #ff7070;
+  font-family: var(--font-heading);
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
 .textarea {
   resize: vertical;
 }
