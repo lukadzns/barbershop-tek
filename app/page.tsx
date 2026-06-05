@@ -1,6 +1,8 @@
 'use client'
 import Link from 'next/link'
+import Image from 'next/image'
 import { SERVICES, OPENING_HOURS, SHOP_INFO } from '@/lib/constants'
+import Image from 'next/image'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -10,12 +12,7 @@ export default function Home() {
       <nav className={styles.nav}>
         <div className={`container ${styles.navInner}`}>
           <Link href="/" className={styles.navLogo}>
-            <svg width="36" height="36" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <line x1="20" y1="18" x2="80" y2="18" stroke="#D4A017" strokeWidth="6" strokeLinecap="round"/>
-              <line x1="50" y1="18" x2="50" y2="50" stroke="#D4A017" strokeWidth="6" strokeLinecap="round"/>
-              <line x1="50" y1="50" x2="30" y2="82" stroke="#D4A017" strokeWidth="5" strokeLinecap="round"/>
-            </svg>
-            <span>Barbershop Tek</span>
+            <Image src="/logo.png" alt="Barbershop Tek" width={110} height={44} style={{ objectFit: 'contain', height: '44px', width: 'auto' }} priority />
           </Link>
           <div className={styles.navLinks}>
             <a href="#diensten">Diensten</a>

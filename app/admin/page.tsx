@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { format, startOfWeek, addDays, addWeeks, subWeeks, isToday } from 'date-fns'
 import { nl } from 'date-fns/locale'
+import Image from 'next/image'
 import { supabase, Booking } from '@/lib/supabase'
 import { SERVICES, TIME_SLOTS } from '@/lib/constants'
 import styles from './admin.module.css'
@@ -69,11 +70,7 @@ export default function AdminPage() {
       <div className={styles.loginPage}>
         <div className={styles.loginBox}>
           <div className={styles.loginLogo}>
-            <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
-              <line x1="20" y1="18" x2="80" y2="18" stroke="#D4A017" strokeWidth="6" strokeLinecap="round"/>
-              <line x1="50" y1="18" x2="50" y2="50" stroke="#D4A017" strokeWidth="6" strokeLinecap="round"/>
-              <line x1="50" y1="50" x2="30" y2="82" stroke="#D4A017" strokeWidth="5" strokeLinecap="round"/>
-            </svg>
+            <Image src="/logo.png" alt="Barbershop Tek" width={80} height={40} style={{ objectFit: "contain", height: "40px", width: "auto" }} />
           </div>
           <h1 className={styles.loginTitle}>Admin</h1>
           <p className={styles.loginSub}>Barbershop Tek</p>
@@ -101,11 +98,7 @@ export default function AdminPage() {
       {/* Header */}
       <header className={styles.header}>
         <div className={styles.headerLeft}>
-          <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
-            <line x1="20" y1="18" x2="80" y2="18" stroke="#D4A017" strokeWidth="6" strokeLinecap="round"/>
-            <line x1="50" y1="18" x2="50" y2="50" stroke="#D4A017" strokeWidth="6" strokeLinecap="round"/>
-            <line x1="50" y1="50" x2="30" y2="82" stroke="#D4A017" strokeWidth="5" strokeLinecap="round"/>
-          </svg>
+          <Image src="/logo.png" alt="Barbershop Tek" width={80} height={28} style={{ objectFit: "contain", height: "28px", width: "auto" }} />
           <div>
             <h1 className={styles.headerTitle}>Afspraken</h1>
             <p className={styles.headerSub}>Barbershop Tek</p>
